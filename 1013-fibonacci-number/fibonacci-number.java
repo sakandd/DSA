@@ -5,8 +5,19 @@ class Solution {
         }else if(n==1){
             return 1;
         }
-        return fib(n-1)+ fib(n-2);
+        int a = 0;
+        int b = 1;
+        
+        int result =0;
+        for(int i =2; i<=n; i++){
+         result = a+b;
+         a = b;
+         b = result;
+         
         }
+        return result;
+        
 
         
     }
+}
