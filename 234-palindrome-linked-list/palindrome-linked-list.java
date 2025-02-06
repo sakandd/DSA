@@ -1,39 +1,39 @@
-public class Solution {
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
     public boolean isPalindrome(ListNode head) {
-        // Find the middle
-        ListNode fast = head, slow = head;
-        while (fast != null && fast.next != null) {
-            fast = fast.next.next;
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast!=null && fast.next!=null){
+            fast =fast.next.next;
             slow = slow.next;
         }
-        if (fast != null) { // odd nodes: let right half smaller
-            slow = slow.next;
-        }
-
-        // Reverse the second half
-        slow = reverseList(slow);
-        fast = head;
-
-        // Start comparing one by one
-        while (slow != null) {
-            if (fast.val != slow.val)
-                return false;
-
-            fast = fast.next;
-            slow = slow.next;
-        }
-        return true;
-    }
-
-    private ListNode reverseList(ListNode head) {
-        ListNode prev = null;
-        ListNode current = head;
-        while (current != null) {
-            ListNode next = current.next;
+        ListNode prev = null ;
+        ListNode current = slow;
+        ListNode next = null;
+        while(current!=null){
+            next = current.next;
             current.next = prev;
             prev = current;
             current = next;
         }
-        return prev;
+        ListNode first = head;
+        ListNode second = prev;
+        while(second!=null){
+            if(first.val!=second.val){
+                return false;
+            }
+            first =first.next;
+           second = second.next;
+        }
+        return true;
     }
 }
