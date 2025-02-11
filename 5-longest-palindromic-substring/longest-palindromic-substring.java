@@ -1,38 +1,41 @@
 class Solution {
     public String longestPalindrome(String s) {
-        if (s == null || s.length() < 1) {
-            return "";
-        }
-        
-        int n = s.length();
+        if (s == null || s.length() == 0) return "";
+
         int maxLength = 0;
-        String longestPalindrome = "";
-        
-        for (int i = 0; i < n; i++) {
-            for (int j = i + 1; j <= n; j++) {
-                String substring = s.substring(i, j);
-                if (isPalindrome(substring) && substring.length() > maxLength) {
-                    maxLength = substring.length();
-                    longestPalindrome = substring;
+        int start = 0, end = 0;
+
+        char[] arr = s.toCharArray(); // Convert string to character array
+
+        // Check all substrings using two loops (similar to subarray problems)
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i; j < arr.length; j++) {
+                if (isPalindrome(arr, i, j)) {
+                    int length = j - i + 1;
+                    if (length > maxLength) {
+                        maxLength = length;
+                        start = i;
+                        end = j;
+                    }
                 }
             }
         }
-        
-        return longestPalindrome;
+        return s.substring(start, end + 1);
     }
-    
-    private boolean isPalindrome(String s) {
-        int left = 0;
-        int right = s.length() - 1;
-        
-        while (left < right) {
-            if (s.charAt(left) != s.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
+
+    // Helper function to check if a substring is a palindrome (Iterative)
+    private boolean isPalindrome(char[] arr, int start, int end) {
+        while (start < end) {
+            if (arr[start] != arr[end]) return false;
+            start++;
+            end--;
         }
-        
         return true;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        String str = "babad";
+        System.out.println(sol.longestPalindrome(str)); // Output: "bab" or "aba"
     }
 }
